@@ -1,0 +1,21 @@
+machine:
+  services:
+    - docker
+
+general:
+  branches:
+    ignore:
+      - gh-pages # list of branches to ignore
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - docker info
+    - docker build -t portefaix/clair:1.0 1.0
+
+test:
+  override:
+    - docker run -d -p 6060:6060 -p 6061:6061 portefaix/clair:1.0; sleep 20
+    - curl --retry 10 --retry-delay 5 -v http://localhost:6060/v1/versions
+
