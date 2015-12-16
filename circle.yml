@@ -16,6 +16,6 @@ dependencies:
 
 test:
   override:
-    - docker run -d v /tmp:/db -p 6060:6060 -p 6061:6061 portefaix/clair:1.0 /clair --db-type=bolt --db-path=/db/portefaix.db; sleep 20
+    - docker run -d -v /tmp:/db -p 6060:6060 -p 6061:6061 portefaix/clair:1.0 /clair --db-type=bolt --db-path=/db/portefaix.db; sleep 20
     - curl --retry 10 --retry-delay 5 -v http://localhost:6060/v1/versions
 
